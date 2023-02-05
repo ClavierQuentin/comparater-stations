@@ -1,0 +1,105 @@
+
+body{
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+section{
+    min-width: 50%;
+}
+.intro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5% auto;
+    padding: 2%;
+    width: 70%;
+ min-height: 300px ;
+ border: 2px solid rgb(185, 175, 245);
+ border-radius: 10px;
+}
+#form{
+    gap: 5%;
+}
+#divVille{
+    visibility: hidden;
+}
+.selects{
+    display: flex;
+    flex-wrap: wrap;
+}
+label{
+    font-weight: bold;
+}
+
+h2{
+    text-align: center;
+}
+h4{
+    font-size: 1rem !important;
+}
+h5{
+    text-align: center;
+    width: 75%;
+    text-align: center;
+}
+li{
+    list-style: none;
+}
+.active-cards{
+    border: 3px solid rgb(238, 40, 40);
+    box-shadow: rgb(230, 70, 70) 0px 0px 10px;
+}
+
+.button{
+    position: absolute;
+    right: 0;
+    margin: 2px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+#map { 
+    height: 50vh; 
+}
+
+svg .border{
+    fill: black;
+}
+svg .background{
+    fill: rgba(255, 255, 255, 0);
+}
+.background_yellow{
+    fill:yellow !important;
+    transition:1s ease-in-out ;
+}
+.star {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+  }
+
+  .list_maj{
+    font-size: 10px;
+  }
+.listeEssence{
+    padding: 0;
+    margin: 0;
+}
+.underline{
+    text-decoration: underline;
+}
+
+@media screen and (max-width:500px) {
+    .liste{
+        display: none;
+    }
+    .carte{
+        width: 95%;
+        margin: auto;
+    }
+}

@@ -1,0 +1,6 @@
+php/connexion.php
+composer.json
+composer.lock
+error_log
+vendor/
+vendor/*

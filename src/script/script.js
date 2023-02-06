@@ -82,7 +82,7 @@ const setFetch = (url, method, data = false) => {
 
 const rajoutFavori = (a, b) => {
     let data = "id="+a+"&nom="+b;
-    let fetch = setFetch("php/fav.php", "POST", data)
+    let fetch = setFetch("server/fav.php", "POST", data)
     // const headers = new Headers();
     // headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -126,7 +126,7 @@ const delFavori = (a, b) => {
     //     cache: "default",
     //     body: data
     // })
-    let fetch = setFetch("php/delete.php", "POST", data)
+    let fetch = setFetch("server/delete.php", "POST", data)
     .then((res)=>{
         if(res.ok){
             return res.text();

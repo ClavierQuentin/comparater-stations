@@ -1,17 +1,11 @@
-import { getMarkers } from "../../utils.js";
+import { beginningRequestUrl, getMarkers } from "../../utils.js";
+import { essenceDetails, getDataFromFetch } from "../script/validateForm.js";
 
 const favorisPage = {
     generate : () =>{
         let id = [];
         let essence = [];
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');    
-        fetch('php/favorisReq.php', {
-            headers: headers,
-            method: "GET",
-            mode:"cors",
-            cache:"default"
-        })
+        let fetch = setFetch('server/favorisReq.php', "GET")   
         .then((res) => {
             if(res.ok){
                 return res.json();
@@ -20,9 +14,8 @@ const favorisPage = {
         .then((response) => {
             id = response.id;  
             essence = response.essence;
-            let array = [];
             for(let i = 0; i < response.length; i++){
-                fetch("https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-carburants-fichier-instantane-test-ods-copie&q=&lang=js&facet=id&facet=adresse&facet=ville&facet=prix_maj&facet=prix_nom&facet=com_arm_name&facet=epci_name&facet=dep_name&facet=reg_name&facet=services_service&facet=horaires_automate_24_24&refine.prix_nom="+response[i].essence+"&refine.id="+response[i].id)
+                let secondFetch = setFetch(beginningRequestUrl + "&refine.prix_nom="+response[i].essence+"&refine.id="+response[i].id)
                 .then((res) => {
                     if(res.ok){
                         return res.json();
@@ -30,39 +23,7 @@ const favorisPage = {
                 })
                 .then((results)=>{
                     let data = results.records;
-                    for(let i = 0; i < data.length; i++){
-                        let ville = (data[i].fields.ville).toLowerCase();
-                        ville = ville.charAt(0).toUpperCase() + ville.slice(1); 
-                        let isTrue = false;
-                        for(let j = 0; j < array.length; j++){
-                            if(array[j].adresse == data[i].fields.adresse){
-                                isTrue = true;
-                                array[j].essence.push({
-                                    
-                                    maj: data[i].fields.prix_maj.split("-")[2].split("T")[0] + "/" + data[i].fields.prix_maj.split("-")[1] + "/" + data[i].fields.prix_maj.split("-")[0],
-                                    prix: data[i].fields.prix_valeur,
-                                    nom: data[i].fields.prix_nom,
-                                })
-                                break;
-                            }
-                        }
-                        if(!isTrue){
-                            array.push({
-                                geom1:data[i].fields.geom[0],
-                                geom2:data[i].fields.geom[1],
-                                id: data[i].fields.id,
-                                adresse: data[i].fields.adresse,
-                                ville: ville,
-                                essence:[
-                                    {
-                                        maj: data[i].fields.prix_maj.split("-")[2].split("T")[0] + "/" + data[i].fields.prix_maj.split("-")[1] + "/" + data[i].fields.prix_maj.split("-")[0],
-                                        prix: data[i].fields.prix_valeur,
-                                        nom: data[i].fields.prix_nom
-                                    }
-                                ]
-                            })
-                        }            
-                    }
+                    let array = getDataFromFetch(data);
                     const main = document.querySelector('main');
                     main.innerHTML = 
                     `

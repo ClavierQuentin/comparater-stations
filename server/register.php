@@ -1,5 +1,7 @@
 <?php
 include "connexion.php";
+session_start();
+
 if(isset($_POST['submit'])){
     
     if(isset($_COOKIE['error'])){
@@ -49,17 +51,5 @@ if(isset($_POST['submit'])){
         header("location: https://quentin-clavier.com/comparateur-stations/#/favoris");
     }
         
-    //     die;
-    //     if($stmt->error){
-    //       if($stmt->errno == 1062){
-    //         echo "Adresse email déjà existante";
-    //         die;
-    //       }
-    //       echo "Une erreur est survenue";
-    //       die;
-    //     }
-    //     $_SESSION['email_user'] = $email;
-    //     header("location: https://quentin-clavier.com/comparateur-stations/#/favoris");
-    //   }
 }
 ?>

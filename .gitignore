@@ -4,3 +4,5 @@ composer.lock
 error_log
 vendor/
 vendor/*
+
+src/pages/profile.js

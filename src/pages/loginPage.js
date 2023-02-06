@@ -9,7 +9,7 @@ const loginPage= {
 
         main.innerHTML = 
         ` 
-            <form style="margin:auto;" action="?page=login" method="POST" class="col-md-6 col-10">
+            <form style="margin:auto;" action="./server/login.php" method="POST" class="col-md-6 col-10">
                 <h3>Connexion : </h3>
                 <input class="form-control m-1" type="email" name="email" placeholder="Email" required>
                 <span style="color:red;">${error}</span>

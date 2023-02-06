@@ -12,6 +12,35 @@ const essenceDetails = (data) => {
     }
 }
 
+const getDataFromFetch = (data) => {
+    let array = [];
+    for(let i = 0; i < data.length; i++){
+        let ville = (data[i].fields.ville).toLowerCase();
+        ville = ville.charAt(0).toUpperCase() + ville.slice(1); 
+        let isTrue = false;
+        for(let j = 0; j < array.length; j++){
+            if(array[j].adresse == data[i].fields.adresse){
+                isTrue = true;
+                array[j].essence.push(essenceDetails(data[i]))
+                break;
+            }
+        }
+        if(!isTrue){
+
+            array.push({
+                dep: data[i].fields.dep_name,
+                geom1:data[i].fields.geom[0],
+                geom2:data[i].fields.geom[1],
+                id: data[i].fields.id,
+                adresse: data[i].fields.adresse,
+                ville: ville,
+                essence:[essenceDetails(data[i])]
+            })
+        }
+    }
+    return array;
+}
+
 const validateForm = () => {
     let divResults = document.getElementById('container');
     let selectDepartements = document.getElementById('départements');
@@ -34,33 +63,7 @@ const validateForm = () => {
      })
      .then((results)=>{
         let data = results.records;
-        let array = [];
-        let villeReq = results.facet_groups[5].facets[0].name;
-        for(let i = 0; i < data.length; i++){
-            let ville = (data[i].fields.ville).toLowerCase();
-            ville = ville.charAt(0).toUpperCase() + ville.slice(1); 
-            let isTrue = false;
-            for(let j = 0; j < array.length; j++){
-                if(array[j].adresse == data[i].fields.adresse){
-                    isTrue = true;
-                    array[j].essence.push(essenceDetails(data[i]))
-                    break;
-                }
-            }
-            if(!isTrue){
-
-                array.push({
-                    comm_name: villeReq,
-                    dep: data[i].fields.dep_name,
-                    geom1:data[i].fields.geom[0],
-                    geom2:data[i].fields.geom[1],
-                    id: data[i].fields.id,
-                    adresse: data[i].fields.adresse,
-                    ville: ville,
-                    essence:[essenceDetails(data[i])]
-                })
-            }
-        }
+        let array = getDataFromFetch(data);
         divResults.innerHTML =        
             `
             <div class="row gx-0">
@@ -87,7 +90,6 @@ const validateForm = () => {
                                         <li><span class="underline">Type:</span> ${essence.nom}</li>
                                         <li><span class="underline">Prix:</span> ${essence.prix} €</li>
                                         <li><span class="list_maj">Dernière mise à jour le ${essence.maj}</span></li>
-                                        <input type="hidden" value = ${beginningRequestUrl}"&refine.dep_name=${item.dep}&refine.com_arm_name=${item.comm_name}&refine.prix_nom=${essence.nom}&rows=10000">
                                             `
                                             ).join("")}
                                     </ul>
@@ -143,4 +145,4 @@ const validateForm = () => {
  }
  
 
-export { validateForm };
+export { validateForm, essenceDetails, getDataFromFetch };

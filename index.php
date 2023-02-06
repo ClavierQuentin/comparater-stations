@@ -1,22 +1,13 @@
 <?php
 
-include "php/connexion.php";
+include "server/connexion.php";
 session_start();
 
 if(isset($_GET['page'])){
   $page = $_GET['page'];
   switch ($page){
-    case "register":
-      include 'php/register.php';
-      break;
-    case "login":
-      include 'php/login.php';
-      break;
     case "logout":
-      include 'php/logout.php';
-      break;
-    case "delete":
-      include "php/delete.php";
+      include 'server/logout.php';
       break;
     default:
     break;

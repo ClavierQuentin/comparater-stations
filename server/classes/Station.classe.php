@@ -1,5 +1,7 @@
 <?php
 
+include_once("./utils.php");
+
 class Station{
     private $id;
     private $StationId;
@@ -33,29 +35,19 @@ class Station{
             die;
         }
 
-        $sql = "INSERT INTO station (stationId, ville, adresse, essences, geom1, geom2, emailUser) VALUE (:stationId, :ville, :adresse, :essences, :geom1, :geom2, :emailUser)";
+        $values = [
+            ["param" => "stationId", "value" => htmlspecialchars($infos["id"]), "type" => PDO::PARAM_INT],
+            ["param" => "ville", "value" => htmlspecialchars($infos["ville"]), "type" => PDO::PARAM_STR],
+            ["param" => "adresse", "value" => htmlspecialchars($infos["adresse"]), "type" => PDO::PARAM_STR],
+            ["param" => "essences", "value" => $infos["essence"], "type" => PDO::PARAM_STR],
+            ["param" => "geom1", "value" => htmlspecialchars($infos["geom1"]), "type" => PDO::PARAM_STR],
+            ["param" => "geom2", "value" => htmlspecialchars($infos["geom2"]), "type" => PDO::PARAM_STR],
+            ["param" => "emailUser", "value" => $email, "type" => PDO::PARAM_STR]
+        ];
 
-        $StationId = htmlspecialchars($infos["id"]);
-        $ville = htmlspecialchars($infos["ville"]);
-        $adresse = htmlspecialchars($infos["adresse"]);
-        $essences = $infos["essence"];
-        $geom1 = htmlspecialchars($infos["geom1"]);
-        $geom2 = htmlspecialchars($infos["geom2"]);
-        $emailUser = $email;
+        $rqt = insertRequest($connexion, "station", $values);
 
-        $sth = $connexion->prepare($sql);
-
-        $sth->bindValue(":stationId", $StationId, PDO::PARAM_INT);
-        $sth->bindValue(":ville", $ville);
-        $sth->bindValue(":adresse", $adresse);
-        $sth->bindValue(":essences", $essences);
-        $sth->bindValue(":geom1", $geom1);
-        $sth->bindValue(":geom2", $geom2);
-        $sth->bindValue(":emailUser", $emailUser);
-
-        $sth->execute();
-
-        if($sth){
+        if($rqt){
             $response = [
                 "status"=>"200",
                 "Message" => "Ajouté aux favoris"

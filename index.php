@@ -52,32 +52,28 @@ if(isset($_GET['page'])){
                     <a class="nav-link active " aria-current="page" href="#">Accueil</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link "  href="#/form">Recherche</a>
+                    <a class="nav-link "  href="#/form">Rechercher</a>
                   </li>
-                  <?php
-                    if(isset($_SESSION['email_user'])){
-                      echo '<li class="nav-item">
-                              <a class="nav-link "  href="#/favoris">Favoris</a>
-                            </li>';
-                    }
-
-                  ?>
                 </ul>
                 <ul class="navbar-nav">
                   <?php
-                    if(isset($_SESSION["email_user"])){
-                      echo '<li class="nav-item dropdowm">
-                              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bonjour</a>
+                    if(isset($_SESSION["email_user"])){?>
+                      <li class="nav-item dropdowm">
+                              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$_SESSION["prenom_user"]?></a>
                                 <div class="dropdown-menu dropdown-menu-end m-1" aria-labelledby="navbarDropdown">
                                   <!--<a class="dropdowm-item nav-link" href="#/profil">Mon profil</a>-->
+                                  <a class="dropwdowm-item nav-link" href="#/favoris">Favoris</a>
                                   <a class="dropwdowm-item nav-link" href="./?page=logout">Déconnexion</a>
                                 </div>
-                            </li>';
+                            </li>
+                    <?php
                     }
                     else{
-                      echo '<li class="nav-item">
+                      ?>
+                    <li class="nav-item">
                       <a class="nav-link " href="#/login">Connexion</a>
-                    </li>';
+                    </li>
+                    <?php
                     }
                   ?>
                   

@@ -1,30 +1,21 @@
 <?php 
 include "connexion.php";
+require_once __DIR__ . "/classes/User.classe.php";
 session_start();
 
 if(isset($_POST['submit'])){
-    if(isset($_POST['email']) AND isset($_POST["password"])){
+    $infos = $_POST;
 
-        $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars($_POST["password"]);
+    if(isset($infos["email"]) && isset($infos["password"])){
 
-        $sth = $connexion->prepare("SELECT password FROM utilisateur WHERE email = :email");
+        $user = User::getUserFromDB($connexion, $infos);
 
-        $sth->bindValue(':email', $email);
-
-        $sth->execute();
-        $resultat = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-        if(password_verify($password, $resultat[0]['password'])){
-            $_SESSION["email_user"] = $email;
-
-            if(isset($_COOKIE['error'])){
-                setcookie('error', '', time()-3600);
-            }
+        if(password_verify($infos["password"], $user->getPassword())){
             
-            if(isset($_COOKIE['error_login'])){
-                setcookie('error_login', '', time()-3600);
-            }
+            $_SESSION["email_user"] = $user->getEmail();
+            $_SESSION["prenom_user"] = $user->getPrenom();
+
+            User::initCookies();
         
         
             // header("location: https://quentin-clavier.com/comparateur-stations/#/favoris");

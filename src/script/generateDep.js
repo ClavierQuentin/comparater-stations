@@ -7,24 +7,20 @@ const generateDep = () => {
 
     let nomDepartement = "";
 
-    const generateSelectDepartements = () => {
-        selectDepartements.innerHTML = "";
-        let chaine = `
-            <option>Sélectionner un département</option>
-            ${departement.map(departement => `<option id="${departement.code}" value="${departement.nom}">${departement.code} - ${departement.nom}</option>`
-            ).join("")}
-        `;
-        selectDepartements.innerHTML = chaine;
-    };
-
-    generateSelectDepartements();
+    selectDepartements.innerHTML = "";
+    let chaine = `
+        <option>Sélectionner un département</option>
+        ${departement.map(departement => `<option id="${departement.code}" value="${departement.nom}">${departement.code} - ${departement.nom}</option>`
+        ).join("")}
+    `;
+    selectDepartements.innerHTML = chaine;
 
     selectDepartements.addEventListener('change', () =>{
         divVille.style.visibility = "visible"
 
         selectVille.innerHTML = "";
         nomDepartement = selectDepartements.value;
-        let fetch = setFetch(beginningRequestUrl + "&refine.dep_name=" + nomDepartement + "&rows=10000", "GET")
+        setFetch(beginningRequestUrl + "&refine.dep_name=" + nomDepartement + "&rows=10000", "GET")
         .then((res) => {
             if(res.ok){
                 return res.json();

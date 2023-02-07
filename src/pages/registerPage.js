@@ -9,6 +9,8 @@ const registerPage= {
         ` 
             <form style="margin:auto;" action="./server/register.php" method="POST" class="col-md-6 col-10">
                 <h3>S'enregistrer : </h3>
+                <input class="form-control m-1" type="prenom" name="prenom" placeholder="Prénom" required>
+                <input class="form-control m-1" type="nom" name="nom" placeholder="Nom" required>
                 <input class="form-control m-1" type="email" name="email" placeholder="Email" required>
                 <input class="form-control m-1" type="password" name="password" placeholder="Mot de passe" required>
                 <input class="form-control m-1" type="password" name="password_review" placeholder="Indiquez à nouveau le mot de passe" required>

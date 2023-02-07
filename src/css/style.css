@@ -76,7 +76,7 @@ svg .background{
     fill:yellow !important;
     transition:1s ease-in-out ;
 }
-.star {
+.star, .deleteBtn {
     position: absolute;
     right: 5px;
     top: 5px;

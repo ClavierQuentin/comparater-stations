@@ -80,19 +80,14 @@ const setFetch = (url, method, data = false) => {
     
 }
 
-const rajoutFavori = (a, b) => {
-    let data = "id="+a+"&nom="+b;
-    let fetch = setFetch("server/fav.php", "POST", data)
-    // const headers = new Headers();
-    // headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    // fetch("php/fav.php", {
-    //     method: "POST",
-    //     headers:headers,
-    //     mode: "cors",
-    //     cache: "default",
-    //     body: data
-    // })
+const registerFavori = (item) => {
+    let data = `id=${item.id}`;
+    data += `&ville=${item.ville}`;
+    data += `&adresse=${item.adresse}`;
+    data += `&geom1=${item.geom1}`;
+    data += `&geom2=${item.geom2}`;
+    data += `&essence=${JSON.stringify(item.essences)}`;
+    setFetch("server/fav.php", "POST", data)
     .then((res)=>{
         if(res.ok){
             return res.json();
@@ -104,7 +99,7 @@ const rajoutFavori = (a, b) => {
             let starsIcons = document.getElementsByClassName('star');
 
             Array.from(starsIcons).forEach(star => {
-                if(a == star.getAttribute('data-id')){
+                if(item.id == star.getAttribute('data-id')){
                    star.childNodes[1].childNodes[3].classList.add('background_yellow');
                 }
             })
@@ -113,20 +108,12 @@ const rajoutFavori = (a, b) => {
     .catch((err) => {
         console.log(err);
     })
+
 }
 
-const delFavori = (a, b) => {
-    let data = "id="+a+"&nom="+b;
-    // const headers = new Headers();
-    // headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    // fetch("php/delete.php", {
-    //     method: "POST",
-    //     headers:headers,
-    //     mode: "cors",
-    //     cache: "default",
-    //     body: data
-    // })
-    let fetch = setFetch("server/delete.php", "POST", data)
+const delFavori = (a) => {
+    let data = "id="+a;
+    setFetch("server/delete.php", "POST", data)
     .then((res)=>{
         if(res.ok){
             return res.text();

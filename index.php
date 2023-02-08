@@ -1,13 +1,13 @@
 <?php
 
-include "server/connexion.php";
+include "./server/connexion.php";
 session_start();
 
 if(isset($_GET['page'])){
   $page = $_GET['page'];
   switch ($page){
     case "logout":
-      include 'server/logout.php';
+      include './server/actions/user/logout.php';
       break;
     default:
     break;
@@ -62,8 +62,9 @@ if(isset($_GET['page'])){
                               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?=$_SESSION["prenom_user"]?></a>
                                 <div class="dropdown-menu dropdown-menu-end m-1" aria-labelledby="navbarDropdown">
                                   <!--<a class="dropdowm-item nav-link" href="#/profil">Mon profil</a>-->
-                                  <a class="dropwdowm-item nav-link" href="#/favoris">Favoris</a>
-                                  <a class="dropwdowm-item nav-link" href="./?page=logout">Déconnexion</a>
+                                  <a class="dropdowm-item nav-link" href="#/favoris">Favoris</a>
+                                  <a href="#/profil" class="dropdowm-item nav-link">Mon profil</a>
+                                  <a class="dropdowm-item nav-link" href="./?page=logout">Déconnexion</a>
                                 </div>
                             </li>
                     <?php

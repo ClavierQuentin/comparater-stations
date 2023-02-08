@@ -7,7 +7,7 @@ const registerPage= {
           getCookie('error')? error = "Les mots de passe ne correspondent pas" : error = "";  
           main.innerHTML = 
         ` 
-            <form style="margin:auto;" action="./server/register.php" method="POST" class="col-md-6 col-10">
+            <form style="margin:auto;" action="./server/actions/user/register.php" method="POST" class="col-md-6 col-10">
                 <h3>S'enregistrer : </h3>
                 <input class="form-control m-1" type="prenom" name="prenom" placeholder="Prénom" required>
                 <input class="form-control m-1" type="nom" name="nom" placeholder="Nom" required>

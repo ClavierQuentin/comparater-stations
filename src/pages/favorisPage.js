@@ -2,7 +2,7 @@ import { setCard, setMap } from "../../utils.js";
 
 const favorisPage = {
     generate : () =>{
-        setFetch('server/favorisReq.php', "GET")   
+        setFetch('server/actions/favoris/favorisReq.php', "GET")   
         .then((res) => {
             if(res.ok){
                 return res.json();

@@ -9,7 +9,6 @@
  *      ["param" => chaine de caractère réprésentant la colonne cible et son paramètre à bind, "value" => valeur à utiliser, "type" => type PDO à choisir (ex: PDO::PARAM_INT,      PDO::PARAM_STR, ... Voir doc)]
  *  ]
  */
-
 function insertRequest(PDO $connexion, string $table, array $values){
     $sql = "INSERT INTO {$table} (";
 

@@ -87,7 +87,7 @@ const registerFavori = (item) => {
     data += `&geom1=${item.geom1}`;
     data += `&geom2=${item.geom2}`;
     data += `&essence=${JSON.stringify(item.essences)}`;
-    setFetch("server/fav.php", "POST", data)
+    setFetch("server/actions/favoris/fav.php", "POST", data)
     .then((res)=>{
         if(res.ok){
             return res.json();
@@ -113,7 +113,7 @@ const registerFavori = (item) => {
 
 const delFavori = (a) => {
     let data = "id="+a;
-    setFetch("server/delete.php", "POST", data)
+    setFetch("server/actions/favoris/delete.php", "POST", data)
     .then((res)=>{
         if(res.ok){
             return res.text();

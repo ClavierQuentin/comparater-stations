@@ -1,6 +1,8 @@
 <?php
-include "connexion.php";
-require_once __DIR__ . "/classes/Station.classe.php";
+include "../../connexion.php";
+require_once "../../classes/Station.classe.php";
+include "../../utils.php";
+
 session_start();
 
 if(isset($_GET) AND isset($_SESSION['email_user'])){

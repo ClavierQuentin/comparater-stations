@@ -1,6 +1,7 @@
 <?php
-include "connexion.php";
-require_once __DIR__ . "./classes/User.classe.php";
+include "../../connexion.php";
+require_once "../../classes/User.classe.php";
+include "../../utils.php";
 session_start();
 
 User::initCookies();

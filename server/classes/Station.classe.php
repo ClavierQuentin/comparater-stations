@@ -1,6 +1,5 @@
 <?php
 
-include_once("./utils.php");
 
 class Station{
     private $id;

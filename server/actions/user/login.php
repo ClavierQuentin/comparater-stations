@@ -1,6 +1,8 @@
 <?php 
-include "connexion.php";
-require_once __DIR__ . "/classes/User.classe.php";
+include "../../connexion.php";
+require_once "../../classes/User.classe.php";
+include "../../utils.php";
+
 session_start();
 
 if(isset($_POST['submit'])){
@@ -23,13 +25,13 @@ if(isset($_POST['submit'])){
             User::initCookies();
         
         
-            header("location: https://quentin-clavier.com/comparateur-stations/#/favoris");
-            // header("location: http://localhost/mon-comparateur/#/favoris");
+            // header("location: https://quentin-clavier.com/comparateur-stations/#/favoris");
+            header("location: http://localhost/mon-comparateur/#/favoris");
             die;
         }
 
         setcookie("error_login",true);
-        header("location: https://quentin-clavier.com/comparateur-stations/#/login");
+        // header("location: https://quentin-clavier.com/comparateur-stations/#/login");
 
     }
 }

@@ -95,9 +95,6 @@ svg .background{
 }
 
 @media screen and (max-width:500px) {
-    .liste{
-        display: none;
-    }
     .carte{
         width: 95%;
         margin: auto;

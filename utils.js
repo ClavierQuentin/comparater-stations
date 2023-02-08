@@ -126,7 +126,6 @@ const setMap = (map, array) => {
 
              var bound = L.latLngBounds([LatLngs]);
              map.fitBounds(bound);
-
          })
      })
      getMarkers(array, map);
@@ -147,11 +146,11 @@ const getSvg = (item) => {
 const setCard = (array, isFavori = false) => {
         return `
             <div class="row gx-0">
-            <div class = "liste col-6">
+            <div class = "liste col-12 col-md-6">
                 <div class = "row gx-0">
                     ${array.map(item=>
                         `
-                    <div class="col-sm-3 col-10 p-2">
+                    <div class="col-6 col-md-3 p-2">
                         <div class="card bg-light items" id="${item.id}" data-lat="${item.geom1}" data-lng ="${item.geom2}">
                             <div class="card-body">
                                 ${!isFavori? getSvg(item) : `<button data-id="${item.id}" onclick="delFavori(${item.id})" class='deleteBtn btn btn-danger'>X</button>`}                                                                                              
@@ -175,7 +174,7 @@ const setCard = (array, isFavori = false) => {
                 </div>
             </div>
                 
-            <div class = "col-6 carte">
+            <div class = "col-12 col-md-6 carte">
                     <div id="map"></div>
             </div>
         </div>

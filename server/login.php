@@ -7,9 +7,14 @@ if(isset($_POST['submit'])){
     $infos = $_POST;
 
     if(isset($infos["email"]) && isset($infos["password"])){
-
-        $user = User::getUserFromDB($connexion, $infos);
-
+        try{
+            $user = User::getUserFromDB($connexion, $infos);
+        }
+        catch(PDOException $e){
+            echo $e->getMessage();
+            die;
+        }
+        
         if(password_verify($infos["password"], $user->getPassword())){
             
             $_SESSION["email_user"] = $user->getEmail();

@@ -1,4 +1,5 @@
 <?php
+include_once("./utils.php");
 
 class User {
 
@@ -61,31 +62,27 @@ class User {
 
 
     public static function registerNewUser($connexion, $infos){
-        $sql = "INSERT INTO utilisateur (prenom, nom, email, password) VALUES (:prenom, :nom, :email,:password)";
 
-        $sth = $connexion->prepare($sql);
-
-        $sth->bindValue(":prenom", htmlspecialchars($infos["prenom"]));
-        $sth->bindValue(":nom", htmlspecialchars($infos["nom"]));
-        $sth->bindValue(":email", htmlspecialchars($infos["email"]));
-        $sth->bindValue(":password", password_hash(htmlspecialchars($infos["password"]), PASSWORD_DEFAULT));
-
-        $sth->execute();
+        $values = [
+            ["param" => "prenom", "value" => htmlspecialchars($infos["prenom"]), "type" => PDO::PARAM_STR],
+            ["param" => "nom", "value" => htmlspecialchars($infos["nom"]), "type" => PDO::PARAM_STR],
+            ["param" => "email", "value" => htmlspecialchars($infos["email"]), "type" => PDO::PARAM_STR],
+            ["param" => "password", "value" => htmlspecialchars($infos["password"]), "type" => PDO::PARAM_STR],
+        ];
+        $rqt = insertRequest($connexion, "utilisateur", $values);
 
         return User::getUserFromDB($connexion, $infos);
     }
 
 
     public static function getUserFromDB($connexion, $infos){
-        $sql = "SELECT * FROM utilisateur WHERE email = :email LIMIT 1";
+        $values = [
+            ["param" => "email", "value" => htmlspecialchars($infos["email"]), "type" => PDO::PARAM_STR]
+        ];
 
-        $sth = $connexion->prepare($sql);
+        $stmt = selectRequest($connexion, "utilisateur", $values);
 
-        $sth->bindValue(":email", $infos["email"]);
-
-        $sth->execute();
-
-        $result = $sth->fetch(PDO::FETCH_OBJ);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
 
         return User::createFromInfos($result);
     }

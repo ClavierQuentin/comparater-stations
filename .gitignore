@@ -1,7 +1,7 @@
-php/connexion.php
+server/connexion.php
 composer.json
 composer.lock
-error_log
+server/error_log
 vendor/
 vendor/*
 

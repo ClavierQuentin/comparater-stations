@@ -1,7 +1,5 @@
 import { beginningRequestUrl, setCard, setMap, getDataFromFetch } from "../../utils.js";
 
-
-
 const validateForm = () => {
     let divResults = document.getElementById('container');
     let selectDepartements = document.getElementById('départements');
@@ -12,7 +10,6 @@ const validateForm = () => {
 
     let nomVille = selectVille.value;
      
- 
     let nomDepartement = selectDepartements.value;
     let request = beginningRequestUrl + "&refine.dep_name=" + nomDepartement + "&refine.com_arm_name=" + nomVille + "&rows=10000";
      

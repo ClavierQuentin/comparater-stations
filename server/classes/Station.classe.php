@@ -58,18 +58,15 @@ class Station{
     }
 
     public static function checkInDB($connexion, $infos, $email){
-        $stationId = htmlspecialchars($infos["id"]);
 
-        $sql = "SELECT * FROM station WHERE emailUser = :email AND stationId = :stationId";
+        $values = [
+            ["param" => "emailUser", "value" => $email, "type" => PDO::PARAM_STR],
+            ["param" => "stationId", "value" => htmlspecialchars($infos["id"]), "type" => PDO::PARAM_INT]
+        ];
 
-        $sth = $connexion->prepare($sql);
+        $stmt = selectRequest($connexion, "station", $values);
 
-        $sth->bindValue(":email", $email);
-        $sth->bindValue(":stationId", $stationId, PDO::PARAM_INT);
-
-        $sth->execute();
-
-        $result = $sth->fetch(PDO::FETCH_OBJ);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
 
         if($result){
             return true;
@@ -78,30 +75,27 @@ class Station{
     }
 
     public static function getFromDB($connexion, $email){
-        $sql = "SELECT * FROM station WHERE emailUser = :email";
-        $sth = $connexion->prepare($sql);
+        $values = [
+            ["param" => "emailUser", "value" => $email, "type" => PDO::PARAM_STR]
+        ];
 
-        $sth->bindValue(":email", $email);
-
-        $sth->execute();
+        $stmt = selectRequest($connexion, "station", $values);
 
         $result = [];
 
-        while($station = $sth->fetch(PDO::FETCH_OBJ)){
+        while($station = $stmt->fetch(PDO::FETCH_OBJ)){
             $result[] = $station;
         }
 
         echo json_encode($result);
     }
 
-    public static function deleteFromDB($connexio, $id){
-        $sql = "DELETE FROM station WHERE id = :id";
+    public static function deleteFromDB($connexion, $id){
+        $values = [
+            ["param" => "id", "value" => $id, "type" => PDO::PARAM_INT]
+        ];
 
-        $sth = $connexio->prepare($sql);
-
-        $sth->bindValue(":id", $id, PDO::PARAM_INT);
-
-        return $sth->execute();
+        return deleteRequest($connexion, "station", $values);
     }
 }
 

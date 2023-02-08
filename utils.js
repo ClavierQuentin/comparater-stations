@@ -90,11 +90,10 @@ const getMarkers = (array, map) =>{
         point.bindPopup(contentPopup);
 
         // Pour recentrage automatique
-        LatLngs.push([point_lat, point_lng]); //remplissage du tableau avec lattitude / longitude des marqueurs
-
-        var bounds = L.latLngBounds([LatLngs]);
-        map.fitBounds(bounds);
+        LatLngs.push([point_lat, point_lng]); //remplissage du tableau avec lattitude / longitude des marqueurs    
     }//FIn for
+    var bounds = L.latLngBounds(LatLngs);
+    map.fitBounds(bounds);
 };//Fin fonction getMArker
 
 

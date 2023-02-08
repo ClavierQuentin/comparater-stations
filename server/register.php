@@ -15,8 +15,8 @@ if(isset($_POST['submit'])){
 
         if($infos["password"] != $password_review){
             setcookie("error_password",true);
-            // header("location: https://quentin-clavier.com/comparateur-stations/#/register");
-            header("location: localhost/mon-comparateur/#/register");
+            header("location: https://quentin-clavier.com/comparateur-stations/#/register");
+            // header("location: localhost/mon-comparateur/#/register");
 
             die;  
         }
@@ -28,18 +28,18 @@ if(isset($_POST['submit'])){
         catch(PDOException $e){
             if($e->getCode() == 23000){
                 setcookie("error_unique",true);
-                // header("location: https://quentin-clavier.com/comparateur-stations/#/register");
+                header("location: https://quentin-clavier.com/comparateur-stations/#/register");
                 die;
 
             }
             setcookie("error",true);
-            header("location: localhost/mon-comparateur/#/register");
+            // header("location: localhost/mon-comparateur/#/register");
 
-            // header("location: https://quentin-clavier.com/comparateur-stations/#/register");
+            header("location: https://quentin-clavier.com/comparateur-stations/#/register");
             die;
         }
-        // header("location: https://quentin-clavier.com/comparateur-stations/#/favoris");
-        header("location: localhost/mon-comparateur/#/favoris");
+        header("location: https://quentin-clavier.com/comparateur-stations/#/favoris");
+        // header("location: localhost/mon-comparateur/#/favoris");
 
     }
             

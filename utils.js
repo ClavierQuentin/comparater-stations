@@ -1,3 +1,4 @@
+import GasStation from "./src/classes/station";
 
 const parseRequestUrl = () => {
     const url = document.location.hash.toLowerCase();
@@ -66,8 +67,8 @@ const getMarkers = (array, map) =>{
     var LatLngs = new Array();
 
     for(let i = 0; i < array.length; i++){
-        var point_lat = array[i].geom1;
-        var point_lng = array[i].geom2;
+        var point_lat = array[i].geom[0];
+        var point_lng = array[i].geom[1];
         var myIcon = getIcon(); 
         let id = array[i].id
         var point = L.marker([point_lat, point_lng], {icon: myIcon, id: id }).addTo(allMarkers).addTo(map);
@@ -78,10 +79,10 @@ const getMarkers = (array, map) =>{
         // Pour Popup
         var contentPopup = "<h4 class='titre_popups'>" + array[i].adresse + "</h4>";
         contentPopup += "<div class='content_popups'><ul>";
-        contentPopup +=  array[i].essences.map(essence=>
+        contentPopup +=  array[i].prix.map(essence=>
             `
         <li>Type : ${essence.nom}</li>
-        <li>Prix : ${essence.prix} €</li>
+        <li>Prix : ${essence.valeur} €</li>
         <li><span class="list_maj">Dernière mise à jour le ${essence.maj}</span></li>
             `
             ).join("")
@@ -104,7 +105,7 @@ function getCookie(name) {
   }
 
 
-const beginningRequestUrl = "https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-instantane-v2&q=&lang=js&facet=id&facet=adresse&facet=ville&facet=prix_maj&facet=prix_nom&facet=com_arm_name&facet=epci_name&facet=dep_name&facet=reg_name&facet=services_service&facet=horaires_automate_24_24";
+const beginningRequestUrl = "https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-instantane-v2&q=&lang=js&facet=ville";
 
 
 const setMap = (map, array) => {
@@ -150,16 +151,16 @@ const setCard = (array, isFavori = false) => {
                     ${array.map(item=>
                         `
                     <div class="col-6 col-md-3 p-2">
-                        <div class="card bg-light items" id="${item.id}" data-lat="${item.geom1}" data-lng ="${item.geom2}">
+                        <div class="card bg-light items" id="${item.id}" data-lat="${item.geom[0]}" data-lng ="${item.geom[1]}">
                             <div class="card-body">
                                 ${!isFavori? getSvg(item) : `<button data-id="${item.id}" onclick="delFavori(${item.id})" class='deleteBtn btn btn-danger'>X</button>`}                                                                                              
                                 <h5 class="card-title m-1">${item.ville}</h5>
                                 <p>${item.adresse}</p>
                                 <ul class="listeEssence">
-                                    ${item.essences.map(essence=>
+                                    ${item.prix.map(essence=>
                                         `
                                     <li><span class="underline">Type:</span> ${essence.nom}</li>
-                                    <li><span class="underline">Prix:</span> ${essence.prix} €</li>
+                                    <li><span class="underline">Prix:</span> ${essence.valeur} €</li>
                                     <li><span class="list_maj">Dernière mise à jour le ${essence.maj}</span></li>
                                         `
                                         ).join("")}
@@ -184,40 +185,9 @@ const returnFunctionIFTrue = (data) => {
     return data? data : "Aucune information disponible";
 }
 
-const essenceDetails = (data) => {
-    return {
-        maj: data.fields.prix_maj? data.fields.prix_maj.split("-")[2].split("T")[0] + "/" + data.fields.prix_maj.split("-")[1] + "/" + data.fields.prix_maj.split("-")[0] : "Aucune information disponible",
-        prix: returnFunctionIFTrue(data.fields.prix_valeur),
-        nom: returnFunctionIFTrue(data.fields.prix_nom)
-    }
-}
 
-const getDataFromFetch = (data) => {
-    let array = [];
-    for(let i = 0; i < data.length; i++){
-        let ville = (data[i].fields.ville).toLowerCase();
-        ville = ville.charAt(0).toUpperCase() + ville.slice(1); 
-        let isTrue = false;
-        for(let j = 0; j < array.length; j++){
-            if(array[j].adresse == data[i].fields.adresse){
-                isTrue = true;
-                array[j].essences.push(essenceDetails(data[i]))
-                break;
-            }
-        }
-        if(!isTrue){
-
-            array.push({
-                geom1:data[i].fields.geom[0],
-                geom2:data[i].fields.geom[1],
-                id: data[i].fields.id,
-                adresse: data[i].fields.adresse,
-                ville: ville,
-                essences:[essenceDetails(data[i])]
-            })
-        }
-    }
-    return array;
+const getDataFromFetch = (data) => { 
+    return data.map(data => new GasStation(data.fields));
 }
 
 

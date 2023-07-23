@@ -36,7 +36,7 @@ if(isset($_GET['page'])){
      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
      crossorigin=""></script>
      
-    <title>Comparateur</title>
+    <title>Comparateur de stations services</title>
 
 
 </head>

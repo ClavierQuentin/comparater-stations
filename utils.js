@@ -1,4 +1,4 @@
-import GasStation from "./src/classes/station";
+import GasStation from "./src/classes/station.js";
 
 const parseRequestUrl = () => {
     const url = document.location.hash.toLowerCase();

@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/svwz2068/public_html/comparateur
+    - /bin/cp -R images $DEPLOYPATH

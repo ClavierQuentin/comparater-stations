@@ -6,7 +6,7 @@ if(isset($_SESSION['email_user'])){
     
     User::initCookies();
 
-    // header("location: https://quentin-clavier.com/comparateur-stations/");
-    header("location: http://localhost/mon-comparateur");
+    header("location: https://quentin-clavier.com/comparateur-stations/");
+    // header("location: http://localhost/mon-comparateur");
 }
 ?>

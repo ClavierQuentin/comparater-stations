@@ -20,19 +20,15 @@ const generateDep = () => {
 
         selectVille.innerHTML = "";
         nomDepartement = selectDepartements.value;
-        setFetch(beginningRequestUrl + "&refine.dep_name=" + nomDepartement + "&rows=10000", "GET")
+        setFetch(beginningRequestUrl + "&refine.departement=" + nomDepartement + "&rows=10000", "GET")
         .then((res) => {
             if(res.ok){
                 return res.json();
             }
         })
         .then((data)=>{
-
-            let array = [];
-            for(let i = 0; i < data.facet_groups[5].facets.length; i++){
-                array.push(data.facet_groups[5].facets[i].name);
-            }
-            sortBySmaller(array);
+            const facetGroup = data.facet_groups[0];
+            const array = facetGroup.facets.map(facet => facet.name).sort();
 
             let chaine = `
                 ${array.map(ville => `<option id="${ville}" value="${ville}">${ville}</option>`)}

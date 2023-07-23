@@ -11,7 +11,7 @@ const validateForm = () => {
     let nomVille = selectVille.value;
      
     let nomDepartement = selectDepartements.value;
-    let request = beginningRequestUrl + "&refine.dep_name=" + nomDepartement + "&refine.com_arm_name=" + nomVille + "&rows=10000";
+    let request = beginningRequestUrl + "&refine.departement=" + nomDepartement + "&refine.ville=" + nomVille + "&rows=10000";
      
     fetch(request)
      .then((res) => {
@@ -19,18 +19,17 @@ const validateForm = () => {
              return res.json();
          }
      })
-     .then((results)=>{
-        let data = results.records;
-        let array = getDataFromFetch(data);
-        divResults.innerHTML =  setCard(array);      
+     .then((data)=>{
+        let results = getDataFromFetch(data.records);
+        divResults.innerHTML =  setCard(results);      
        var map = L.map('map').setView([51.505, -0.09], 13);
-       setMap(map, array);
+       setMap(map, results);
 
         let starsIcons = document.getElementsByClassName('star');
 
         Array.from(starsIcons).forEach(star => {
             star.addEventListener('click', () => {
-                array.forEach(station => {
+                results.forEach(station => {
                     if(station.id == star.getAttribute('data-id')){
                         registerFavori(station);
                     }

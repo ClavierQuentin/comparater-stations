@@ -11,13 +11,17 @@ class GasStation {
     }
 
     parsePrices(pricesString) {
-        const pricesArray = JSON.parse(pricesString);
-        return pricesArray.map(price => ({
-            nom: price["@nom"],
-            id: price["@id"],
-            maj: this.formatDate(price["@maj"]),
-            valeur: price["@valeur"]
-        }));
+        if(pricesString){
+            const pricesArray = JSON.parse(pricesString);
+            return pricesArray.map(price => ({
+                nom: price["@nom"],
+                id: price["@id"],
+                maj: this.formatDate(price["@maj"]),
+                valeur: price["@valeur"]
+            }));    
+        }else{
+            return [];
+        }
     }
     formatDate(dateString) {
         const date = new Date(dateString);
@@ -34,7 +38,11 @@ class GasStation {
         return date.toLocaleString("en-GB", options);
     }
     parseCarburants(carburantsString) {
-        return carburantsString.split(";").map(carburant => carburant.trim());
+        if(carburantsString){
+            return carburantsString.split(";").map(carburant => carburant.trim());
+        }else{
+            return "NC";
+        }
     }
 }
 

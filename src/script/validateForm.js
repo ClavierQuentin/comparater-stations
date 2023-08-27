@@ -12,7 +12,6 @@ const validateForm = () => {
      
     let nomDepartement = selectDepartements.value;
     let request = beginningRequestUrl + "&refine.departement=" + nomDepartement + "&refine.ville=" + nomVille + "&rows=10000";
-     
     fetch(request)
      .then((res) => {
          if(res.ok){
@@ -21,6 +20,7 @@ const validateForm = () => {
      })
      .then((data)=>{
         let results = getDataFromFetch(data.records);
+        console.log(results);
         divResults.innerHTML =  setCard(results);      
        var map = L.map('map').setView([51.505, -0.09], 13);
        setMap(map, results);

@@ -1,4 +1,5 @@
-server/connexion.php
+server/
+server/*
 composer.json
 composer.lock
 server/error_log

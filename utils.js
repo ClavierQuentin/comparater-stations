@@ -157,13 +157,18 @@ const setCard = (array, isFavori = false) => {
                                 <h5 class="card-title m-1">${item.ville}</h5>
                                 <p>${item.adresse}</p>
                                 <ul class="listeEssence">
-                                    ${item.prix.map(essence=>
+                                    ${item.prix.length > 0 ? item.prix.map(essence=>
                                         `
                                     <li><span class="underline">Type:</span> ${essence.nom}</li>
                                     <li><span class="underline">Prix:</span> ${essence.valeur} €</li>
                                     <li><span class="list_maj">Dernière mise à jour le ${essence.maj}</span></li>
                                         `
-                                        ).join("")}
+                                        ).join("") : 
+                                            `
+                                            <li><span class="underline">Type:</span> ${item.prix.nom}</li>
+                                            <li><span class="underline">Prix:</span> ${item.prix.valeur} €</li>
+                                            <li><span class="list_maj">Dernière mise à jour le ${item.prix.maj}</span></li>        
+                                            `}
                                 </ul>
 
                             </div>

@@ -13,12 +13,16 @@ class GasStation {
     parsePrices(pricesString) {
         if(pricesString){
             const pricesArray = JSON.parse(pricesString);
-            return pricesArray.map(price => ({
-                nom: price["@nom"],
-                id: price["@id"],
-                maj: this.formatDate(price["@maj"]),
-                valeur: price["@valeur"]
-            }));    
+            if(pricesArray.length > 0){
+                return pricesArray.map(price => ({
+                    nom: price["@nom"],
+                    id: price["@id"],
+                    maj: this.formatDate(price["@maj"]),
+                    valeur: price["@valeur"]
+                }));        
+            }else{
+                return pricesArray;
+            }
         }else{
             return [];
         }

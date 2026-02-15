@@ -1,0 +1,23 @@
+image: alpine:latest
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    # Installer un serveur web léger
+    - apk add --no-cache busybox-extras curl
+    # Démarrer httpd en arrière-plan
+    - httpd -p 8080 -h . &
+    - sleep 2
+    # Tester que le serveur répond
+    - curl -f http://localhost:8080/index.html || exit 1
+    # Optionnel : vérifier que le JS se charge
+    - curl -f http://localhost:8080/script.js || exit 1
+  artifacts:
+    paths:
+      - "*.html"
+      - "*.js"
+      - "*.css"
+    expire_in: 1 day
